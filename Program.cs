@@ -26,7 +26,7 @@ namespace WakeUpAudioDevice
         private static WasapiLoopbackCapture? auxCapture;
         private static DateTime auxActiveLastTime = DateTime.UtcNow - TimeSpan.FromDays(1);
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var enumerator = new MMDeviceEnumerator();
 
@@ -63,10 +63,7 @@ namespace WakeUpAudioDevice
                 };
             });
 
-            Task.Run(AudioDataListenerTask);
-
-            Console.WriteLine("Press ENTER to exit");
-            Console.ReadLine();
+            await AudioDataListenerTask();
         }
 
         static float GetAverageInputAmplitude(WaveInEventArgs e)
@@ -99,13 +96,12 @@ namespace WakeUpAudioDevice
             }
         }
 
-        static /*async*/ void PlayWakeUpWave()
+        static void PlayWakeUpWave()
         {
             using (var wasapiOut = new WasapiOut(bluetoothDevice, AudioClientShareMode.Shared, false, 50))
             {
                 wasapiOut.Init(wakeUpWave);
                 wasapiOut.Play();
-                //await Task.Delay(10);
             }
         }
     }
