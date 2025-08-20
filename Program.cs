@@ -15,7 +15,8 @@ namespace WakeUpAudioDevice
             Amplitude = .01f
         }.Apply(it => it.SetWaveFormat(44_100, 1));
 
-        private const string auxDeviceTag = "Xonar";
+        //private const string auxDeviceTag = "Xonar"; 
+        private const string auxDeviceTag = "Realtek";
         private const string bluetoothDeviceTag = "JBL";
         private const float activeAmplitudeThreshold = .001f;
         private const int checkStateTimerMs = 2 * 60 * 1000;
